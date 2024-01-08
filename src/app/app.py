@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, jsonify
 import pandas as pd
 
 app = Flask(__name__)
@@ -9,24 +9,13 @@ log_df = pd.read_csv(log_data_path)
 
 # Your data fetching logic goes here
 def get_chart_data(selected_category):
-    if selected_category == 'Country':
-        chart_data = log_df['Country'].value_counts().to_dict()
-    elif selected_category == 'Browser':
-        chart_data = log_df['Browser'].value_counts().to_dict()
-    elif selected_category == 'DateTime':
-        # Assuming 'Date Time' is a datetime column in your CSV
-        chart_data = log_df['Date Time'].dt.year.value_counts().to_dict()
-    elif selected_category == 'OperatingSystem':
-        chart_data = log_df['Operating System'].value_counts().to_dict()
-    else:
-        chart_data = {}
-
+    chart_data = log_df[selected_category].value_counts().to_dict()
     return chart_data
 
 
 @app.route('/')
 def index():
-    return render_template('main.html')
+    return render_template('index.html')
 
 
 @app.route('/chart_data/<selected_category>')
