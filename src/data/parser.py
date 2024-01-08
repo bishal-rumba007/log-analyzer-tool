@@ -1,6 +1,5 @@
 import re
 import csv
-import geoip2.database
 from multiprocessing import Pool
 
 
@@ -24,7 +23,7 @@ def parse_log_line(line):
         else:
             os = 'Other'
 
-        return (ip, browser, os, date_time)
+        return ip, browser, os, date_time
     else:
         return None
 
@@ -47,5 +46,5 @@ def write_to_csv(data):
 
 
 if __name__ == "__main__":
-    ip_data = parse_log_file('serverLog')
+    ip_data = parse_log_file('src/data/log')
     write_to_csv(ip_data)
