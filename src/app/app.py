@@ -3,12 +3,16 @@ import pandas as pd
 
 app = Flask(__name__)
 
-log_data_path = 'C:/Users/Bishal/PycharmProjects/LogAnalyzerTool/output.csv'
+log_data_path = 'C:/Users/Bishal/PycharmProjects/LogAnalyzerTool/src/data/rumba.csv'
 log_df = pd.read_csv(log_data_path)
 
 
 def get_chart_data(selected_category):
-    chart_data = log_df[selected_category].value_counts().to_dict()
+    if selected_category == 'IP':
+        # Group by 'Country' and count unique IPs
+        chart_data = log_df.groupby('Country')['IP'].nunique().to_dict()
+    else:
+        chart_data = log_df[selected_category].value_counts().to_dict()
     return chart_data
 
 

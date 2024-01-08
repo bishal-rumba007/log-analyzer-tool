@@ -39,12 +39,12 @@ def parse_log_file(filename):
 
 
 def write_to_csv(data):
-    with open('output.csv', 'w', newline='') as f:
+    with open('log.csv', 'w', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(['IP', 'Browser', 'Operating System', 'Date Time'])
         writer.writerows(data)
 
 
 if __name__ == "__main__":
-    ip_data = parse_log_file('C:/Users/Bishal/PycharmProjects/LogAnalyzerTool/src/data/serverLog')
+    ip_data = parse_log_file('C:/Users/Bishal/PycharmProjects/LogAnalyzerTool/src/data/log')
     write_to_csv(ip_data)
