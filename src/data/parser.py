@@ -46,5 +46,5 @@ def write_to_csv(data):
 
 
 if __name__ == "__main__":
-    ip_data = parse_log_file('src/data/log')
+    ip_data = parse_log_file('C:/Users/Bishal/PycharmProjects/LogAnalyzerTool/src/data/serverLog')
     write_to_csv(ip_data)

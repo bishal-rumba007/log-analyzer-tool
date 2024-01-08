@@ -7,7 +7,6 @@ log_data_path = 'C:/Users/Bishal/PycharmProjects/LogAnalyzerTool/output.csv'
 log_df = pd.read_csv(log_data_path)
 
 
-# Your data fetching logic goes here
 def get_chart_data(selected_category):
     chart_data = log_df[selected_category].value_counts().to_dict()
     return chart_data

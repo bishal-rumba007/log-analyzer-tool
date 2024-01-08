@@ -6,40 +6,48 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Server Log Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
     <h1>Server Log Analyzer</h1>
 
-    <div id="charts-container">
-        <canvas id="ipChart" width="400" height="400"></canvas>
-        <canvas id="browserChart" width="400" height="400"></canvas>
-        <canvas id="osChart" width="400" height="400"></canvas>
-        <canvas id="dateTimeChart" width="400" height="400"></canvas>
+    <div id="charts-container" class="chart-wrap">
+        <div class="chart-card">
+            <canvas id="ipChart" width="400" height="400"></canvas>
+        </div>
+        <div class="chart-card">
+            <canvas id="browserChart" width="400" height="400"></canvas>
+        </div>
+        <div class="chart-card">
+            <canvas id="osChart" width="400" height="400"></canvas>
+        </div>
+        <div class="chart-card">
+            <canvas id="dateTimeChart" width="400" height="400"></canvas>
+        </div>
     </div>
 
     <script>
         function updateCharts() {
             fetch(`/chart_data/IP`)
                 .then(response => response.json())
-                .then(data => renderChart(data, 'ipChart'));
+                .then(data => renderChart(data, 'ipChart', 'bar'));
 
             fetch(`/chart_data/Browser`)
                 .then(response => response.json())
-                .then(data => renderChart(data, 'browserChart'));
+                .then(data => renderChart(data, 'browserChart', 'doughnut'));
 
             fetch(`/chart_data/Operating%20System`)
                 .then(response => response.json())
-                .then(data => renderChart(data, 'osChart'));
+                .then(data => renderChart(data, 'osChart', 'pie'));
 
             fetch(`/chart_data/Date%20Time`)
                 .then(response => response.json())
-                .then(data => renderChart(data, 'dateTimeChart'));
+                .then(data => renderChart(data, 'dateTimeChart', 'line'));
         }
 
-
-        function renderChart(data, chartId) {
+        function renderChart(data, chartId, chartType) {
             console.log('Received data:', data);
             var canvas = document.getElementById(chartId);
 
@@ -60,7 +68,7 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             window[chartId] = new Chart(ctx, {
-                type: 'pie',
+                type: chartType,
                 data: {
                     labels: Object.keys(data),
                     datasets: [{
